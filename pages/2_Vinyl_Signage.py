@@ -7,11 +7,10 @@ st.set_page_config(page_title="Vinyl & Signage", layout="wide")
 # -----------------------------
 # Two-column header section
 # -----------------------------
-col1, col2 = st.columns([1, 1.2])
+col1, col2 = st.columns([1, 1.2])  # adjust ratios if needed
 
 with col1:
     st.image("assets/images/sign_hero.jpg", width=400)
-
 with col2:
     st.title("Vinyl & Signage")
     st.write("High-quality vinyl signs, decals and window films")
@@ -20,17 +19,19 @@ with col2:
     st.write("""
     - Vinyl Signs & Decals
     - Window Films & Privacy Films
-    - Shopfront & Office Signage
+    - Shopfront & Office Signage 
     """)
+    
+st.divider() # horizontal divider 
 
-st.divider()
+#------
+# Image Layout Section 
+#------
 
-# -----------------------------
-# Image Layout Section
-# -----------------------------
 st.subheader("Recent Vinyl Signage")
 
 # Load images
+
 image_folder = "assets/signs"
 images = [
     os.path.join(image_folder, img)
@@ -38,39 +39,45 @@ images = [
     if img.lower().endswith((".png", ".jpg", ".jpeg"))
 ]
 
-# Sort or manually assign if needed
-tall_image = images[0]          # left tall image
-top_right_1 = images[1]         # top-right image 1
-top_right_2 = images[2]         # top-right image 2
-bottom_right = images[3]        # bottom-left image
+# Sort or maually assign if needed
 
-# -----------------------------
-# Main layout: tall left + 3 images + button
-# -----------------------------
+tall_image = images[0] # Book shop sign (tall)
+grid_images = images[1:4] # next 4 images for 2x2 grid
+
+# Main layout: talll image left, 2x2 grid right
+
 left, right = st.columns([1, 2])
 
-# LEFT: Tall image
-with left:
-    st.image(Image.open(tall_image), use_column_width=True)
+# Tall image on the left
+left, right = st.columns([1, 2])
 
-# RIGHT: 2×2 grid (3 images + button)
+# Left: tall image
+with left:
+    st.image(Image.open(tall_image), width=287)
+
+# Right: 2×2 grid with button in bottom-right
 with right:
     row1 = st.columns(2)
     row2 = st.columns(2)
 
-    # Top row
+    # First row
     with row1[0]:
-        st.image(Image.open(top_right_1), use_column_width=True)
-
+        st.image(Image.open(grid_images[0]), width=300)
     with row1[1]:
-        st.image(Image.open(top_right_2), use_column_width=True)
+        st.image(Image.open(grid_images[1]), width=300)
 
-    # Bottom-left image
+    # Second row
     with row2[0]:
-        st.image(Image.open(bottom_right), use_column_width=True)
+        st.image(Image.open(grid_images[2]), width=300)
 
-    # Bottom-right button
+    # Bottom-right: blank space + button
     with row2[1]:
-        st.markdown("<div style='height:40px;'></div>", unsafe_allow_html=True)
+        st.write("")      # spacer
+        st.write("")      # spacer
+        st.write("")      # spacer
+        
+        #st.page_link("pages/gallery.py", label="View Full Gallery", icon="🖼️")
+        
         if st.button("View Our Gallery"):
-            st.switch_page("pages/gallery.py")
+            st.switch_page("pages/gallery.py") # button style link
+
